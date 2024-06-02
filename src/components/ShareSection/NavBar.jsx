@@ -1,5 +1,6 @@
 import Logo from "../../../public/images/logo_big.svg";
 import Avatar from "../../../public/images/avatar.png";
+import { FaCaretDown } from "react-icons/fa";
 
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
@@ -31,10 +32,14 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li className="text-sm font-normal text-base-400 ">
-        <NavLink>
+        <Link>
           <div className="dropdown">
-            <div tabIndex={0} role="button">
-              Language
+            <div
+              tabIndex={0}
+              role="button"
+              className="flex items-center  gap-1"
+            >
+              <span>Language</span> <FaCaretDown />
             </div>
             <ul
               tabIndex={0}
@@ -48,7 +53,7 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-        </NavLink>
+        </Link>
       </li>
     </>
   );

@@ -1,9 +1,7 @@
-import Navbar from "../../../components/ShareSection/NavBar";
-
 const Home = () => {
   return (
     <div>
-      <Navbar></Navbar>
+      <h1 className="text-3xl">home</h1>
     </div>
   );
 };
