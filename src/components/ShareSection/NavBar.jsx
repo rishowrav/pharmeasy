@@ -147,7 +147,7 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/registration" className="btn btn-sm  ">
+                  <Link to="/register" className="btn btn-sm  ">
                     Register
                   </Link>
                 </li>
