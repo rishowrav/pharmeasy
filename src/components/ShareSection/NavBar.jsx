@@ -56,7 +56,7 @@ const Navbar = () => {
   return (
     <div className="shadow-sm">
       <div
-        className="navbar bg-base-100 py-6 container mx-auto"
+        className="navbar bg-base-100 py-4 container mx-auto"
         data-aos-duration="1000"
         data-aos="fade-right"
       >
