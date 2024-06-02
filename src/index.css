@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a.active {
+  color: green !important;
+  background: none !important;
+}
+
+a.active:focus {
+  color: green !important;
+  background: none !important;
+}
+
+.navbar li a:hover {
+  color: green !important;
+  background: transparent !important;
+}
