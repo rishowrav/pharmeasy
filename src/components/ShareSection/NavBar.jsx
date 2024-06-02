@@ -27,7 +27,7 @@ const Navbar = () => {
       </li>{" "}
       <li className="text-sm font-normal text-base-400 ">
         <NavLink to="/cartIcon">
-          <IoCartOutline className="text-xl"></IoCartOutline>
+          <IoCartOutline className="text-xl"></IoCartOutline> Cart
         </NavLink>
       </li>
       <li className="text-sm font-normal text-base-400 ">
