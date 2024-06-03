@@ -63,7 +63,7 @@ const Register = () => {
             </Link>
 
             <h1 className="mt-4 text-2xl font-medium  capitalize lg:text-4xl ">
-              login to your account
+              Create your new account
             </h1>
           </div>
 

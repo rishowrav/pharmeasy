@@ -3,12 +3,16 @@ import Avatar from "../../../public/images/avatar.png";
 import { FaCaretDown } from "react-icons/fa";
 
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoCartOutline } from "react-icons/io5";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(true);
+  const { user, logOut } = useAuth();
+  const navigate = useNavigate();
 
   if (theme) {
     document
@@ -58,6 +62,19 @@ const Navbar = () => {
     </>
   );
 
+  const handleLogOut = async () => {
+    try {
+      const result = await logOut();
+
+      console.log(result);
+      toast.success("Successfully LogOut");
+      navigate("/login");
+    } catch (er) {
+      console.log(er);
+      toast.success(er.message);
+    }
+  };
+
   return (
     <div className="shadow-sm">
       <div
@@ -97,63 +114,73 @@ const Navbar = () => {
         <div className="navbar-end space-x-3">
           {/* if user login or not login */}
 
-          <>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn bg-green-700 btn-ghost btn-circle avatar z-[999]"
-              >
-                <div className="w-10 rounded-full">
-                  <img alt="Tailwind CSS Navbar component" src={Avatar} />
+          {user && (
+            <>
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn bg-green-700 btn-ghost btn-circle avatar z-[999]"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      src={user?.photoURL || Avatar}
+                    />
+                  </div>
                 </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm space-y-1 dropdown-content mt-3 z-[999] p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <Link to="my_submitted_assignment">Update Profile</Link>
-                </li>
-                <li>
-                  <Link to="dashboard">Dashboard</Link>
-                </li>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm space-y-1 dropdown-content mt-3 z-[999] p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <Link to="my_submitted_assignment">Update Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="dashboard">Dashboard</Link>
+                  </li>
 
-                <li>
-                  <button className="btn btn-sm text-white bg-green-700 border-none ">
-                    LogOut
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </>
-
-          <>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn rounded-full px-6  text-white bg-green-700"
-              >
-                JOIN US
+                  <li>
+                    <button
+                      onClick={handleLogOut}
+                      className="btn btn-sm text-white bg-green-700 border-none "
+                    >
+                      LogOut
+                    </button>
+                  </li>
+                </ul>
               </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 space-y-2"
-              >
-                <li>
-                  <Link to="/login" className="btn btn-sm ">
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/register" className="btn btn-sm  ">
-                    Register
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </>
+            </>
+          )}
+
+          {!user && (
+            <>
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn rounded-full px-6  text-white bg-green-700"
+                >
+                  JOIN US
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 space-y-2"
+                >
+                  <li>
+                    <Link to="/login" className="btn btn-sm ">
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/register" className="btn btn-sm  ">
+                      Register
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </>
+          )}
 
           {/* theme dark light */}
           <label className="cursor-pointer grid place-items-center">
