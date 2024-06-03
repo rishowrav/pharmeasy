@@ -2,12 +2,25 @@ import { Link } from "react-router-dom";
 import Logo from "../../../public/images/logo_big.svg";
 
 const Login = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    console.table({ email, password });
+  };
+
   return (
     <section className=" ">
       <div className="container px-6 py-24 mx-auto lg:py-32">
         <div className="lg:flex items-center">
           <div className="lg:w-1/2">
-            <img className="w-auto h-14" src={Logo} alt="" />
+            <Link to="/">
+              <img className="w-auto h-14" src={Logo} alt="" />
+            </Link>
 
             <h1 className="mt-4 text-2xl font-medium  capitalize lg:text-4xl ">
               login to your account
@@ -15,7 +28,7 @@ const Login = () => {
           </div>
 
           <div className="mt-8 lg:w-1/2 lg:mt-0">
-            <form className="w-full lg:max-w-xl">
+            <form onSubmit={handleLogin} className="w-full lg:max-w-xl">
               <div className="relative flex items-center">
                 <span className="absolute">
                   <svg
@@ -35,6 +48,7 @@ const Login = () => {
                 </span>
 
                 <input
+                  name="email"
                   type="email"
                   className="block w-full py-3   border rounded-lg px-11  dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Email address"
@@ -60,6 +74,7 @@ const Login = () => {
                 </span>
 
                 <input
+                  name="password"
                   type="password"
                   className="block w-full px-10 py-3   border rounded-lg   dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Password"
