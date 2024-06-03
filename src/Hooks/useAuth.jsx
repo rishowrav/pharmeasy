@@ -1,4 +1,6 @@
 import { useContext } from "react";
+
+// @ts-ignore
 import { AuthContext } from "../Provider/AuthProvider";
 
 const useAuth = () => {

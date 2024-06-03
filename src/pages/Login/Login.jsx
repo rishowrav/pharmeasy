@@ -5,7 +5,7 @@ import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const { loginUser } = useAuth();
+  const { loginUser, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -14,6 +14,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  //login with email password
   const onSubmit = async (data) => {
     console.log(data);
 
@@ -21,11 +22,24 @@ const Login = () => {
       const result = await loginUser(data.email, data.password);
 
       console.log("setp-1: complete login user", result);
-      toast.success("Succcessfully registered your account");
+      toast.success("Successfully registered your account");
       navigate("/");
     } catch (er) {
       console.log(er);
       toast.error(er.message);
+    }
+  };
+
+  //login with google
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await loginWithGoogle();
+
+      console.log(result);
+      toast.success("Successfully login with google");
+      navigate("/");
+    } catch (er) {
+      console.log(er);
     }
   };
 
@@ -123,7 +137,7 @@ const Login = () => {
                   Login
                 </button>
               </div>
-              <div className="mt-6 text-center ">
+              <div onClick={handleGoogleLogin} className="mt-6 text-center ">
                 <p className="mt-4 text-center text-gray-600 dark:text-gray-400">
                   or sign in with
                 </p>
