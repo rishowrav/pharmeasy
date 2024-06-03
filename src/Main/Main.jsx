@@ -11,12 +11,12 @@ const Main = () => {
 
   return (
     <div>
-      {isLoginOrRegister || <Navbar className="hidden"></Navbar>}
+      {isLoginOrRegister || <Navbar></Navbar>}
       <div className="min-h-[calc(100vh-322px)] ">
         <Outlet />
       </div>
 
-      {isLoginOrRegister || <Footer className="hidden"></Footer>}
+      {isLoginOrRegister || <Footer></Footer>}
     </div>
   );
 };

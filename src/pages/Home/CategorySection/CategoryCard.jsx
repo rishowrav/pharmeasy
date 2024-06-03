@@ -4,8 +4,11 @@ import category1 from "../../../../public/images/slide1.png";
 const CategoryCard = () => {
   return (
     <Link>
-      <div className="card bg-base-100 shadow-lg shadow-green-200">
-        <figure className="">
+      <div className="card bg-base-100 border border-green-600">
+        <figure className="relative">
+          <span className="font-bold text-xl absolute top-0 right-0 rounded-bl-md bg-green-600 px-5 py-3 text-white">
+            22
+          </span>
           <img
             src={category1}
             alt="Shoes"
