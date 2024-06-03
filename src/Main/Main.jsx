@@ -12,7 +12,7 @@ const Main = () => {
   return (
     <div>
       {isLoginOrRegister || <Navbar className="hidden"></Navbar>}
-      <div className="min-h-[calc(100vh-322px)]">
+      <div className="min-h-[calc(100vh-322px)] ">
         <Outlet />
       </div>
 
