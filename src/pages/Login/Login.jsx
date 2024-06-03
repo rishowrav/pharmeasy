@@ -1,16 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../public/images/logo_big.svg";
+import { useForm } from "react-hook-form";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const { loginUser } = useAuth();
+  const navigate = useNavigate();
 
-    const form = e.target;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    const email = form.email.value;
-    const password = form.password.value;
+  const onSubmit = async (data) => {
+    console.log(data);
 
-    console.table({ email, password });
+    try {
+      const result = await loginUser(data.email, data.password);
+
+      console.log("setp-1: complete login user", result);
+      toast.success("Succcessfully registered your account");
+      navigate("/");
+    } catch (er) {
+      console.log(er);
+      toast.error(er.message);
+    }
   };
 
   return (
@@ -28,7 +44,10 @@ const Login = () => {
           </div>
 
           <div className="mt-8 lg:w-1/2 lg:mt-0">
-            <form onSubmit={handleLogin} className="w-full lg:max-w-xl">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="w-full lg:max-w-xl"
+            >
               <div className="relative flex items-center">
                 <span className="absolute">
                   <svg
@@ -48,13 +67,18 @@ const Login = () => {
                 </span>
 
                 <input
+                  {...register("email", { required: true })}
                   name="email"
                   type="email"
                   className="block w-full py-3   border rounded-lg px-11  dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Email address"
                 />
               </div>
-
+              {errors.email && (
+                <span className="text-sm text-red-600">
+                  This field is required
+                </span>
+              )}
               <div className="relative flex items-center mt-4">
                 <span className="absolute">
                   <svg
@@ -74,12 +98,18 @@ const Login = () => {
                 </span>
 
                 <input
+                  {...register("password", { required: true })}
                   name="password"
                   type="password"
                   className="block w-full px-10 py-3   border rounded-lg   dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Password"
                 />
-              </div>
+              </div>{" "}
+              {errors.password && (
+                <span className="text-sm text-red-600">
+                  This field is required
+                </span>
+              )}
               <div className="mt-1">
                 <a
                   href="#"

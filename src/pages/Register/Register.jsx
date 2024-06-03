@@ -5,6 +5,7 @@ import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { createUser } = useAuth();
@@ -45,6 +46,7 @@ const Register = () => {
         photoURL: photoURL.data.display_url,
       });
 
+      toast.success("Succcessfully registered your account");
       navigate("/");
     } catch (err) {
       console.log(err);
