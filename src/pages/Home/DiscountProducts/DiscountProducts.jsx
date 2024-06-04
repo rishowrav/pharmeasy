@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // import required modules
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import DiscountCard from "./DiscountCard";
 
 const DiscountProducts = () => {
@@ -38,7 +38,13 @@ const DiscountProducts = () => {
             spaceBetween: 30,
           },
         }}
-        modules={[Pagination]}
+        autoplay={{
+          delay: 1500,
+          disableOnInteraction: false,
+        }}
+        speed={1000}
+        loop={true}
+        modules={[Pagination, Autoplay]}
         className="mySwiper"
       >
         <SwiperSlide>
