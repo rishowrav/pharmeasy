@@ -1,172 +1,192 @@
+import product from "../../../public/images/slide1.png";
+import { FaRegEye } from "react-icons/fa";
+
 const Shop = () => {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto container mx-auto  border-x border-base-200 border-t mt-4">
       <table className="table">
         {/* head */}
         <thead>
           <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-            <th></th>
+            <th>#</th>
+            <th>Product Image</th>
+            <th>Name of Product</th>
+            <th>Action</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {/* row 1 */}
           <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
+            <td>1</td>
             <td>
               <div className="flex items-center gap-3">
                 <div className="avatar">
                   <div className="mask mask-squircle w-12 h-12">
-                    <img
-                      src="https://img.daisyui.com/tailwind-css-component-profile-2@56w.png"
-                      alt="Avatar Tailwind CSS Component"
-                    />
+                    <img src={product} alt="Avatar Tailwind CSS Component" />
                   </div>
-                </div>
-                <div>
-                  <div className="font-bold">Hart Hagerty</div>
-                  <div className="text-sm opacity-50">United States</div>
                 </div>
               </div>
             </td>
+            <td>Zemlak, Daniel and Leannon</td>
             <td>
-              Zemlak, Daniel and Leannon
-              <br />
-              <span className="badge badge-ghost badge-sm">
-                Desktop Support Technician
-              </span>
+              <button className="btn btn-sm bg-green-700 text-white rounded-full px-4">
+                select
+              </button>
             </td>
-            <td>Purple</td>
             <th>
-              <button className="btn btn-ghost btn-xs">details</button>
+              <button
+                className="btn btn-ghost btn-xs hover:bg-transparent"
+                onClick={() =>
+                  document.getElementById("my_modal_2").showModal()
+                }
+              >
+                {" "}
+                <FaRegEye className="text-2xl" />
+              </button>
             </th>
           </tr>
-          {/* row 2 */}
+          {/* row 1 */}
           <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
+            <td>1</td>
             <td>
               <div className="flex items-center gap-3">
                 <div className="avatar">
                   <div className="mask mask-squircle w-12 h-12">
-                    <img
-                      src="https://img.daisyui.com/tailwind-css-component-profile-3@56w.png"
-                      alt="Avatar Tailwind CSS Component"
-                    />
+                    <img src={product} alt="Avatar Tailwind CSS Component" />
                   </div>
-                </div>
-                <div>
-                  <div className="font-bold">Brice Swyre</div>
-                  <div className="text-sm opacity-50">China</div>
                 </div>
               </div>
             </td>
+            <td>Zemlak, Daniel and Leannon</td>
             <td>
-              Carroll Group
-              <br />
-              <span className="badge badge-ghost badge-sm">Tax Accountant</span>
+              <button className="btn btn-sm bg-green-700 text-white rounded-full px-4">
+                select
+              </button>
             </td>
-            <td>Red</td>
             <th>
-              <button className="btn btn-ghost btn-xs">details</button>
+              <button
+                className="btn btn-ghost btn-xs hover:bg-transparent"
+                onClick={() =>
+                  document.getElementById("my_modal_2").showModal()
+                }
+              >
+                {" "}
+                <FaRegEye className="text-2xl" />
+              </button>
             </th>
           </tr>
-          {/* row 3 */}
+          {/* row 1 */}
           <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
+            <td>1</td>
             <td>
               <div className="flex items-center gap-3">
                 <div className="avatar">
                   <div className="mask mask-squircle w-12 h-12">
-                    <img
-                      src="https://img.daisyui.com/tailwind-css-component-profile-4@56w.png"
-                      alt="Avatar Tailwind CSS Component"
-                    />
+                    <img src={product} alt="Avatar Tailwind CSS Component" />
                   </div>
-                </div>
-                <div>
-                  <div className="font-bold">Marjy Ferencz</div>
-                  <div className="text-sm opacity-50">Russia</div>
                 </div>
               </div>
             </td>
+            <td>Zemlak, Daniel and Leannon</td>
             <td>
-              Rowe-Schoen
-              <br />
-              <span className="badge badge-ghost badge-sm">
-                Office Assistant I
-              </span>
+              <button className="btn btn-sm bg-green-700 text-white rounded-full px-4">
+                select
+              </button>
             </td>
-            <td>Crimson</td>
             <th>
-              <button className="btn btn-ghost btn-xs">details</button>
+              <button
+                className="btn btn-ghost btn-xs hover:bg-transparent"
+                onClick={() =>
+                  document.getElementById("my_modal_2").showModal()
+                }
+              >
+                {" "}
+                <FaRegEye className="text-2xl" />
+              </button>
             </th>
           </tr>
-          {/* row 4 */}
+          {/* row 1 */}
           <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
+            <td>1</td>
             <td>
               <div className="flex items-center gap-3">
                 <div className="avatar">
                   <div className="mask mask-squircle w-12 h-12">
-                    <img
-                      src="https://img.daisyui.com/tailwind-css-component-profile-5@56w.png"
-                      alt="Avatar Tailwind CSS Component"
-                    />
+                    <img src={product} alt="Avatar Tailwind CSS Component" />
                   </div>
-                </div>
-                <div>
-                  <div className="font-bold">Yancy Tear</div>
-                  <div className="text-sm opacity-50">Brazil</div>
                 </div>
               </div>
             </td>
+            <td>Zemlak, Daniel and Leannon</td>
             <td>
-              Wyman-Ledner
-              <br />
-              <span className="badge badge-ghost badge-sm">
-                Community Outreach Specialist
-              </span>
+              <button className="btn btn-sm bg-green-700 text-white rounded-full px-4">
+                select
+              </button>
             </td>
-            <td>Indigo</td>
             <th>
-              <button className="btn btn-ghost btn-xs">details</button>
+              <button
+                className="btn btn-ghost btn-xs hover:bg-transparent"
+                onClick={() =>
+                  document.getElementById("my_modal_2").showModal()
+                }
+              >
+                {" "}
+                <FaRegEye className="text-2xl" />
+              </button>
+            </th>
+          </tr>
+          {/* row 1 */}
+          <tr>
+            <td>1</td>
+            <td>
+              <div className="flex items-center gap-3">
+                <div className="avatar">
+                  <div className="mask mask-squircle w-12 h-12">
+                    <img src={product} alt="Avatar Tailwind CSS Component" />
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>Zemlak, Daniel and Leannon</td>
+            <td>
+              <button className="btn btn-sm bg-green-700 text-white rounded-full px-4">
+                select
+              </button>
+            </td>
+            <th>
+              <button
+                className="btn btn-ghost btn-xs hover:bg-transparent"
+                onClick={() =>
+                  document.getElementById("my_modal_2").showModal()
+                }
+              >
+                {" "}
+                <FaRegEye className="text-2xl" />
+              </button>
             </th>
           </tr>
         </tbody>
-        {/* foot */}
-        <tfoot>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-            <th></th>
-          </tr>
-        </tfoot>
       </table>
+
+      {/* -------------------modal------------------- */}
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box">
+          <div className="card  bg-base-100 ">
+            <figure className="">
+              <img src={product} alt="Shoes" className="rounded-xl" />
+            </figure>
+            <div className="card-body pt-0 items-center text-center">
+              <h2 className="card-title">
+                Lorem ipsum dolor sit amet consectetur.
+              </h2>
+            </div>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 };
