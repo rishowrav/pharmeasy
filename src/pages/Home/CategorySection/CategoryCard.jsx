@@ -3,7 +3,7 @@ import category1 from "../../../../public/images/slide1.png";
 
 const CategoryCard = () => {
   return (
-    <Link>
+    <Link to="/catagoryDetails">
       <div className="card bg-base-100 border border-green-600">
         <figure className="relative">
           <span className="font-bold text-xl absolute top-0 right-0 rounded-bl-md bg-green-600 px-5 py-3 text-white">
@@ -16,7 +16,7 @@ const CategoryCard = () => {
           />
         </figure>
         <div className="pb-4">
-          <h2 className="text-center">Children king</h2>
+          <h2 className="text-center">Tablet</h2>
         </div>
       </div>
     </Link>
