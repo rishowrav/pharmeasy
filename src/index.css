@@ -5,6 +5,7 @@
 a.active {
   color: green !important;
   background: none !important;
+  border: 1px solid green;
 }
 
 a.active:focus {

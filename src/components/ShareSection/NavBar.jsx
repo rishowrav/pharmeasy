@@ -137,7 +137,7 @@ const Navbar = () => {
                     <Link to="my_submitted_assignment">Update Profile</Link>
                   </li>
                   <li>
-                    <Link to="dashboard">Dashboard</Link>
+                    <Link to="dashboard/adminHome">Dashboard</Link>
                   </li>
 
                   <li>
