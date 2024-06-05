@@ -1,7 +1,13 @@
 const PaymentHistory = () => {
   return (
     <div>
-      <h1 className="text-3xl font-bold bg-pink-600">Payment History</h1>
+      <div>
+        <h2 className="text-4xl text-center mt-6  font-bold">
+          {" "}
+          Payment History
+        </h2>
+        <hr className="w-96 mx-auto mt-2 mb-4" />
+      </div>
     </div>
   );
 };
