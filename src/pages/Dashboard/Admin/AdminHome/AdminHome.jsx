@@ -3,7 +3,7 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 const AdminHome = () => {
   return (
     <div>
-      <h2 className="text-4xl text-center mt-6  font-bold"> Manage Users</h2>
+      <h2 className="text-4xl text-center mt-6  font-bold"> Admin Home</h2>
       <hr className="w-96 mx-auto mt-2 mb-4" />
       <section className="p-6 my-6 dark:bg-gray-100 dark:text-gray-800">
         <div className="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-3">
