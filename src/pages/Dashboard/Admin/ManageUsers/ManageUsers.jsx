@@ -1,6 +1,10 @@
 const ManageUsers = () => {
   return (
     <div className="overflow-x-auto">
+      <div>
+        <h2 className="text-4xl text-center mt-6  font-bold"> Manage Users</h2>
+        <hr className="w-80 mx-auto mt-2 mb-4" />
+      </div>
       <table className="table">
         {/* head */}
         <thead>
