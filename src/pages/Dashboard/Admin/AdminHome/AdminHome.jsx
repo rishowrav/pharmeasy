@@ -1,31 +1,40 @@
+import { RiMoneyDollarCircleFill } from "react-icons/ri";
+
 const AdminHome = () => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold bg-green-600">Admin Home</h1>
+    <section className="p-6 my-6 dark:bg-gray-100 dark:text-gray-800">
+      <div className="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-3">
+        <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-[#009432] text-white">
+          <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-[#006266]">
+            <RiMoneyDollarCircleFill className="text-6xl" />
+          </div>
+          <div className="flex flex-col justify-center align-middle">
+            <p className="text-5xl font-bold leading-none">$987</p>
+            <p className="capitalize font-semibold mt-2">Total Sales Revenue</p>
+          </div>
+        </div>
 
-      <div className="p-6 py-12 dark:bg-indigo-600 dark:text-gray-50">
-        <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
-            <h2 className="text-center text-6xl tracking-tighter font-bold">
-              Up to
-              <br className="sm:hidden" />
-              50% Off
-            </h2>
-            <div className="space-x-2 text-center py-2 lg:py-0">
-              <span>Plus free shipping! Use code:</span>
-              <span className="font-bold text-lg">MAMBA</span>
-            </div>
-            <a
-              href="#"
-              rel="noreferrer noopener"
-              className="px-5 mt-4 lg:mt-0 py-3 rounded-md border block dark:bg-gray-900 dark:text-gray-50 dark:border-gray-600"
-            >
-              Shop Now
-            </a>
+        <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-[#009432] text-white">
+          <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-[#006266]">
+            <RiMoneyDollarCircleFill className="text-6xl" />
+          </div>
+          <div className="flex flex-col justify-center align-middle">
+            <p className="text-5xl font-bold leading-none">$354</p>
+            <p className="capitalize font-semibold mt-2">Paid Total</p>
+          </div>
+        </div>
+
+        <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-[#009432] text-white">
+          <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-[#006266]">
+            <RiMoneyDollarCircleFill className="text-6xl" />
+          </div>
+          <div className="flex flex-col justify-center align-middle">
+            <p className="text-5xl font-bold leading-none">$90</p>
+            <p className="capitalize font-semibold mt-2">Pending Total</p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

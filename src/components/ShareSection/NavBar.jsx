@@ -33,11 +33,12 @@ const Navbar = () => {
       <li className="text-sm font-normal text-base-400 ">
         <NavLink to="/cart">
           <IoCartOutline className="text-xl"></IoCartOutline> Cart
+          <div className="badge bg-green-700 -ml-1 text-white">4</div>
         </NavLink>
       </li>
       <li className="text-sm font-normal text-base-400 ">
         <Link>
-          <div className="dropdown">
+          <div className="dropdown z-50">
             <div
               tabIndex={0}
               role="button"
@@ -137,7 +138,7 @@ const Navbar = () => {
                     <Link to="my_submitted_assignment">Update Profile</Link>
                   </li>
                   <li>
-                    <Link to="dashboard/adminHome">Dashboard</Link>
+                    <Link to="dashboard">Dashboard</Link>
                   </li>
 
                   <li>
@@ -155,7 +156,7 @@ const Navbar = () => {
 
           {!user && (
             <>
-              <div className="dropdown dropdown-end">
+              <div className="dropdown dropdown-end z-50">
                 <div
                   tabIndex={0}
                   role="button"

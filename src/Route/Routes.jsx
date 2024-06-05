@@ -19,6 +19,7 @@ import PaymentHistory from "../pages/Dashboard/Seller/PaymentHistory/PaymentHist
 import Advertisement from "../pages/Dashboard/Seller/Advertisement/Advertisement";
 import UserPaymentHistory from "../pages/Dashboard/User/UserPaymentHistory/UserPaymentHistory";
 import MyQuery from "../pages/Dashboard/User/MyQuery/MyQuery";
+import DashboardMian from "../pages/Dashboard/DashboardMian";
 
 const router = createBrowserRouter([
   {
@@ -53,8 +54,13 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <DashboardMian></DashboardMian>,
     children: [
+      {
+        index: true,
+        element: <Dashboard></Dashboard>,
+      },
+
       // admin path
       {
         path: "adminHome",
