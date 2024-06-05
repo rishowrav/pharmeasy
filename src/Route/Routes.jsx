@@ -17,6 +17,8 @@ import SellerHome from "../pages/Dashboard/Seller/SellerHome/SellerHome";
 import ManageMedicines from "../pages/Dashboard/Seller/ManageMedicines/ManageMedicines";
 import PaymentHistory from "../pages/Dashboard/Seller/PaymentHistory/PaymentHistory";
 import Advertisement from "../pages/Dashboard/Seller/Advertisement/Advertisement";
+import UserPaymentHistory from "../pages/Dashboard/User/UserPaymentHistory/UserPaymentHistory";
+import MyQuery from "../pages/Dashboard/User/MyQuery/MyQuery";
 
 const router = createBrowserRouter([
   {
@@ -95,6 +97,16 @@ const router = createBrowserRouter([
       {
         path: "advertisement",
         element: <Advertisement></Advertisement>,
+      },
+
+      // User Path
+      {
+        path: "userPaymentHistory",
+        element: <UserPaymentHistory></UserPaymentHistory>,
+      },
+      {
+        path: "myQuery",
+        element: <MyQuery></MyQuery>,
       },
     ],
   },
