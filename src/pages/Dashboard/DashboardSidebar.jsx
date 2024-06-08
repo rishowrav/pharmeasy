@@ -8,7 +8,7 @@ import { RiAdvertisementFill } from "react-icons/ri";
 import { DiJqueryLogo } from "react-icons/di";
 
 const DashboardSidebar = () => {
-  const user = "user";
+  const user = "seller";
 
   return (
     <div className="h-screen p-3 fixed left-0 z-50 top-0 space-y-2 w-60 bg-[linear-gradient(-45deg,#00800059,#00800059)]">

@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import category1 from "../../../../public/images/slide1.png";
+import PropTypes from "prop-types";
 
-const CategoryCard = () => {
+const CategoryCard = ({ category }) => {
+  const { category_name, image_url } = category;
+
   return (
     <Link to="/catagoryDetails">
       <div className="card bg-base-100 border border-green-600">
@@ -10,13 +12,13 @@ const CategoryCard = () => {
             22
           </span>
           <img
-            src={category1}
+            src={image_url}
             alt="Shoes"
             className="rounded-xl hover:scale-110 duration-200"
           />
         </figure>
         <div className="pb-4">
-          <h2 className="text-center">Tablet</h2>
+          <h2 className="text-center">{category_name}</h2>
         </div>
       </div>
     </Link>
@@ -24,3 +26,7 @@ const CategoryCard = () => {
 };
 
 export default CategoryCard;
+
+CategoryCard.propTypes = {
+  category: PropTypes.object,
+};
