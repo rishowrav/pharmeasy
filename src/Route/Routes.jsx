@@ -20,6 +20,7 @@ import Advertisement from "../pages/Dashboard/Seller/Advertisement/Advertisement
 import UserPaymentHistory from "../pages/Dashboard/User/UserPaymentHistory/UserPaymentHistory";
 import MyQuery from "../pages/Dashboard/User/MyQuery/MyQuery";
 import DashboardMian from "../pages/Dashboard/DashboardMian";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/catagoryDetails",
-        element: <CatagoryDetails></CatagoryDetails>,
+        element: (
+          <PrivateRoute>
+            <CatagoryDetails></CatagoryDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -54,7 +59,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardMian></DashboardMian>,
+    element: (
+      <PrivateRoute>
+        <DashboardMian></DashboardMian>
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
