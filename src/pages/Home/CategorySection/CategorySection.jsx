@@ -1,17 +1,17 @@
-import axios from "axios";
 import CategoryCard from "./CategoryCard";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 const CategorySection = () => {
+  const axiosPublic = useAxiosPublic();
+
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const { data } = await axios.get("category.json");
+      const { data } = await axiosPublic.get("/categories");
       return data;
     },
   });
-
-  console.log(categories);
 
   return (
     <div className=" space-y-10">
