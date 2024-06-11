@@ -3,10 +3,12 @@ import Logo from "../../../public/images/logo_big.svg";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Login = () => {
   const { loginUser, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
   const {
     register,
@@ -35,6 +37,17 @@ const Login = () => {
     try {
       const result = await loginWithGoogle();
 
+      // user data save in db
+      const currentUser = await {
+        displayName: result?.user?.displayName,
+        photoURL: result?.user?.photoURL,
+        role: "user",
+        email: result?.user?.email,
+      };
+
+      const { data } = await axiosPublic.put("/user", currentUser);
+
+      console.log(data);
       console.log(result);
       toast.success("Successfully login with google");
       navigate("/");

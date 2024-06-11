@@ -17,7 +17,7 @@ const Register = () => {
   const { mutateAsync } = useMutation({
     mutationFn: async (userData) => {
       {
-        const { data } = await axiosPublic.post("/user", userData);
+        const { data } = await axiosPublic.put("/user", userData);
 
         return data;
       }
