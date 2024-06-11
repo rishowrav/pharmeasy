@@ -1,15 +1,34 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../public/images/logo_big.svg";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
 import toast from "react-hot-toast";
+import { upload_image_url } from "../../api/utils";
+import { useMutation } from "@tanstack/react-query";
+import { axiosPublic } from "../../Hooks/useAxiosPublic";
 
 const Register = () => {
   const { createUser } = useAuth();
   const navigate = useNavigate();
+
+  // user data save to server side
+  const { mutateAsync } = useMutation({
+    mutationFn: async (userData) => {
+      {
+        const { data } = await axiosPublic.post("/user", userData);
+
+        return data;
+      }
+    },
+    onSuccess: (data) => {
+      if (data.insertedId) {
+        console.log("user Data Saved Successfully", data);
+        toast.success("Successfully! user data saved");
+      }
+    },
+  });
 
   const {
     register,
@@ -27,14 +46,9 @@ const Register = () => {
     // upload image  imgBB
     try {
       //1. upload image and get image url
-      const { data: photoURL } = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imgbb_key}`,
-        formData,
-        {
-          "content-type": "multipart/form-data",
-        }
-      );
-      console.log("step 1 complete", photoURL.data.display_url);
+      const photo_url = await upload_image_url(formData);
+
+      console.log("step 1 complete", photo_url);
 
       //2. user Registreation (createUser)
       const result = await createUser(data.email, data.password);
@@ -43,8 +57,17 @@ const Register = () => {
       //3. update userProfile
       updateProfile(auth.currentUser, {
         displayName: data.userName,
-        photoURL: photoURL.data.display_url,
+        photoURL: photo_url,
       });
+
+      const userData = {
+        displayName: data.userName,
+        photoURL: photo_url,
+        role: data.role,
+        email: data.email,
+      };
+
+      mutateAsync(userData);
 
       toast.success("Succcessfully registered your account");
       navigate("/");
