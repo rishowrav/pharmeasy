@@ -1,11 +1,91 @@
-const ManageMedicines = () => {
-  const handleAddMedicine = (e) => {
-    const form = e.target;
-    const cName = form.cName.value;
-    const iURL = form.iURL.value;
+import { useState } from "react";
+import AddMedicines from "./AddMedicines";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { upload_image_url } from "../../../../api/utils";
+import useAuth from "../../../../Hooks/useAuth";
+import NotAvaliable from "../../../../components/NotAvailable/NotAvaliable";
 
-    console.table({ cName, iURL });
+const ManageMedicines = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [insertedId, setInsertedId] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+
+  // save medicine data to mongoDB
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (medicineData) => {
+      const { data } = await axiosSecure.post("/add_medicine", medicineData);
+      return data;
+    },
+    onSuccess: (data) => {
+      if (data.insertedId) {
+        toast.success("added medicine");
+        console.log(data);
+        setInsertedId(false);
+        refetch();
+      }
+    },
+  });
+
+  // delete medicine data to mongoDB
+  const { mutateAsync: getId } = useMutation({
+    mutationFn: async (id) => {
+      const { data } = axiosSecure.delete(`/medicine_delete/${id}`);
+      return data;
+    },
+    onSuccess: async (data) => {
+      console.log(data);
+      toast.success("Deleted");
+      refetch();
+    },
+  });
+
+  // react form hook
+  const onSubmit = async (data) => {
+    // upload image in imgBB
+    const formData = new FormData();
+    formData.append("image", data.image_url[0]);
+    const image_url = await upload_image_url(formData);
+
+    data.image_url = await image_url;
+    data.author = await {
+      email: user?.email,
+      name: user?.displayName,
+      photo_url: user?.photoURL,
+    };
+
+    console.table(data);
+
+    // send data
+    await mutateAsync(data);
   };
+
+  // get all users data
+  const {
+    data: medicines = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["medicines", user?.email],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/medicines/${user?.email}`);
+      return data;
+    },
+  });
+
+  // handle delete
+  const handleDelete = (id) => {
+    getId(id);
+  };
+
+  console.log("insertedId= ", insertedId);
+
+  // isLoaidng
+  if (isLoading) {
+    return <p className="text-6xl font-bold text-center">Loading data ...</p>;
+  }
 
   return (
     <div>
@@ -21,342 +101,74 @@ const ManageMedicines = () => {
       <div className="flex justify-end mr-10 mb-6">
         <button
           className="btn bg-green-700 rounded-full px-6 text-white "
-          onClick={() => document.getElementById("add_category").showModal()}
+          onClick={() => {
+            setIsOpen(true);
+          }}
         >
           Add Medicines
         </button>
-        <dialog id="add_category" className="modal">
-          <div className="modal-box w-11/12 max-w-5xl">
-            <form method="dialog" onSubmit={handleAddMedicine}>
-              <div className="flex gap-4">
-                {/* Medicine Name */}
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Medicine Name</span>
-                  </div>
-                  <input
-                    name="medicineName"
-                    type="text"
-                    placeholder="Category Name"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-
-                {/* Generic Name */}
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Generic Name</span>
-                  </div>
-                  <input
-                    name="genericName"
-                    type="text"
-                    placeholder=" Generic Name"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-              </div>
-
-              {/* Image URL */}
-              <label className="form-control w-full ">
-                <div className="label">
-                  <span className="label-text">Image URL</span>
-                </div>
-                <input
-                  name="genericName"
-                  type="text"
-                  placeholder="Image URL"
-                  className="input input-bordered w-full "
-                />
-              </label>
-
-              {/* Description */}
-              <label className="form-control">
-                <div className="label">
-                  <span className="label-text">Description</span>
-                </div>
-                <textarea
-                  className="textarea textarea-bordered h-24"
-                  placeholder="Bio"
-                ></textarea>
-              </label>
-
-              <div className="flex gap-4 mt-4">
-                {/* Select Category */}
-                <label className="form-control w-full ">
-                  <select className="select select-bordered">
-                    <option disabled selected>
-                      Select Category
-                    </option>
-                    <option>Tablate</option>
-                    <option>Chirup</option>
-                  </select>
-                </label>
-
-                {/* Select Company */}
-                <label className="form-control w-full ">
-                  <select className="select select-bordered">
-                    <option disabled selected>
-                      Select Company
-                    </option>
-                    <option>Tablate</option>
-                    <option>Chirup</option>
-                  </select>
-                </label>
-
-                {/* Available  */}
-                <label className="form-control w-full ">
-                  <select className="select select-bordered">
-                    <option disabled selected>
-                      Select Available or Not Available
-                    </option>
-                    <option>Available</option>
-                    <option>Not Available</option>
-                  </select>
-                </label>
-              </div>
-
-              <div className="flex gap-4">
-                {/* Item mass Unit (Mg or ML) */}
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Item mass Unit</span>
-                  </div>
-                  <input
-                    name="genericName"
-                    type="text"
-                    placeholder="Item mass Unit"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-
-                {/* Price) */}
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Price</span>
-                  </div>
-                  <input
-                    name="genericName"
-                    type="text"
-                    placeholder="Price"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-
-                {/* Discount ) */}
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Discount</span>
-                  </div>
-                  <input
-                    name="genericName"
-                    type="text"
-                    placeholder="Discount"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-              </div>
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn w-full btn-success  mt-4">
-                Add Medicines
-              </button>
-            </form>
-          </div>
-        </dialog>
       </div>
 
       {/*Update Medicines Modal */}
-      <dialog id="update_category" className="modal">
-        <div className="modal-box w-11/12 max-w-5xl">
-          <form method="dialog" onSubmit={handleAddMedicine}>
-            <div className="flex gap-4">
-              {/* Medicine Name */}
-              <label className="form-control w-full ">
-                <div className="label">
-                  <span className="label-text">Medicine Name</span>
-                </div>
-                <input
-                  name="medicineName"
-                  type="text"
-                  placeholder="Category Name"
-                  className="input input-bordered w-full "
-                />
-              </label>
+      <AddMedicines
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        onSubmit={onSubmit}
+        isPending={isPending}
+        insertedId={insertedId}
+        setInsertedId={setInsertedId}
+        isLoading={isLoading}
+      />
+      {medicines.length ? (
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Medicine Image</th>
+              <th>Medicine Name</th>
+              <th>Description</th>
+              <td>Action</td>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
 
-              {/* Generic Name */}
-              <label className="form-control w-full ">
-                <div className="label">
-                  <span className="label-text">Generic Name</span>
-                </div>
-                <input
-                  name="genericName"
-                  type="text"
-                  placeholder=" Generic Name"
-                  className="input input-bordered w-full "
-                />
-              </label>
-            </div>
-
-            {/* Image URL */}
-            <label className="form-control w-full ">
-              <div className="label">
-                <span className="label-text">Image URL</span>
-              </div>
-              <input
-                name="genericName"
-                type="text"
-                placeholder="Image URL"
-                className="input input-bordered w-full "
-              />
-            </label>
-
-            {/* Description */}
-            <label className="form-control">
-              <div className="label">
-                <span className="label-text">Description</span>
-              </div>
-              <textarea
-                className="textarea textarea-bordered h-24"
-                placeholder="Bio"
-              ></textarea>
-            </label>
-
-            <div className="flex gap-4 mt-4">
-              {/* Select Category */}
-              <label className="form-control w-full ">
-                <select className="select select-bordered">
-                  <option disabled selected>
-                    Select Category
-                  </option>
-                  <option>Tablate</option>
-                  <option>Chirup</option>
-                </select>
-              </label>
-
-              {/* Select Company */}
-              <label className="form-control w-full ">
-                <select className="select select-bordered">
-                  <option disabled selected>
-                    Select Company
-                  </option>
-                  <option>Tablate</option>
-                  <option>Chirup</option>
-                </select>
-              </label>
-
-              {/* Available  */}
-              <label className="form-control w-full ">
-                <select className="select select-bordered">
-                  <option disabled selected>
-                    Select Available or Not Available
-                  </option>
-                  <option>Available</option>
-                  <option>Not Available</option>
-                </select>
-              </label>
-            </div>
-
-            <div className="flex gap-4">
-              {/* Item mass Unit (Mg or ML) */}
-              <label className="form-control w-full ">
-                <div className="label">
-                  <span className="label-text">Item mass Unit</span>
-                </div>
-                <input
-                  name="genericName"
-                  type="text"
-                  placeholder="Item mass Unit"
-                  className="input input-bordered w-full "
-                />
-              </label>
-
-              {/* Price) */}
-              <label className="form-control w-full ">
-                <div className="label">
-                  <span className="label-text">Price</span>
-                </div>
-                <input
-                  name="genericName"
-                  type="text"
-                  placeholder="Price"
-                  className="input input-bordered w-full "
-                />
-              </label>
-
-              {/* Discount ) */}
-              <label className="form-control w-full ">
-                <div className="label">
-                  <span className="label-text">Discount</span>
-                </div>
-                <input
-                  name="genericName"
-                  type="text"
-                  placeholder="Discount"
-                  className="input input-bordered w-full "
-                />
-              </label>
-            </div>
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn w-full btn-success  mt-4">
-              Update Medicines
-            </button>
-          </form>
-        </div>
-      </dialog>
-
-      <table className="table">
-        {/* head */}
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Medicine Image</th>
-            <th>Medicine Name</th>
-            <th>Description</th>
-            <td>Action</td>
-            <td>Action</td>
-          </tr>
-        </thead>
-        <tbody>
-          {/* row 1 */}
-          <tr>
-            <td>1</td>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-32 h-32">
-                    <img
-                      src="../../../../../public/images/slide4.png"
-                      alt="Avatar Tailwind CSS Component"
-                    />
+            {medicines.map((medicine, i) => (
+              <tr key={medicine?._id}>
+                <td>{i + 1}</td>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-32 h-32">
+                        <img
+                          src={medicine?.image_url}
+                          alt="Avatar Tailwind CSS Component"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </td>
-            <td>Lorem ipsum dolor sit amet.</td>
-            <td className="space-x-2">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Reiciendis odio repellendus culpa illo quidem a facilis corporis
-                iusto fugit hic...
-              </p>
-            </td>
-            <td className="">
-              <button
-                onClick={() =>
-                  document.getElementById("update_category").showModal()
-                }
-                className="btn btn-sm bg-yellow-700 text-white"
-              >
-                Update
-              </button>
-            </td>
-            <td className="">
-              <button className="btn btn-sm bg-red-700 text-white">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                </td>
+                <td>{medicine.medicineName}</td>
+                <td className="space-x-2">
+                  <p>{medicine?.description + " " + medicine?.author?.email}</p>
+                </td>
+
+                <td className="">
+                  <button
+                    onClick={() => handleDelete(medicine?._id)}
+                    className="btn btn-sm bg-red-700 text-white"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <NotAvaliable subHeading={"Add new Medicine"} />
+      )}
     </div>
   );
 };

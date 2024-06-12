@@ -12,10 +12,12 @@ const CatagoryDetails = () => {
 
   const category = location.pathname.split("/")[2];
 
+  console.log(category);
+
   const { data: allData = [], isLoading } = useQuery({
     queryKey: ["category", category],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/categoryDetails/${category}`);
+      const { data } = await axiosSecure.get(`/allMedicines/${category}`);
       return data;
     },
   });
@@ -34,7 +36,14 @@ const CatagoryDetails = () => {
   };
 
   return (
-    <>
+    <div>
+      <div>
+        <h2 className="text-4xl  font-bold text-center my-3 mb-5">
+          {" "}
+          <span className="font-light text-2xl"> Category Name:</span>{" "}
+          {category}
+        </h2>
+      </div>
       {allData.length ? (
         <div className="overflow-x-auto container mx-auto  border-x border-base-200 border-t mt-4">
           <table className="table">
@@ -56,16 +65,16 @@ const CatagoryDetails = () => {
                   <td>
                     <div className="flex items-center gap-3">
                       <div className="avatar">
-                        <div className="mask mask-squircle w-12 h-12">
+                        <div className="mask mask-squircle w-24 h-24">
                           <img
-                            src={data.product_image}
+                            src={data.image_url}
                             alt="Avatar Tailwind CSS Component"
                           />
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td>{data.title}</td>
+                  <td>{data.medicineName}</td>
                   <td>
                     <button className="btn btn-sm bg-green-700 text-white rounded-full px-4">
                       select
@@ -113,7 +122,7 @@ const CatagoryDetails = () => {
       ) : (
         <NotAvaliable></NotAvaliable>
       )}
-    </>
+    </div>
   );
 };
 

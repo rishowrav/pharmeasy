@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { PiMoneyWavyThin, PiUsersLight } from "react-icons/pi";
 import { MdOutlineCategory } from "react-icons/md";
 import { TbReportMoney } from "react-icons/tb";
@@ -6,9 +6,13 @@ import { HiMiniArrowLeftEndOnRectangle } from "react-icons/hi2";
 import avatar from "../../../public/images/avatar.png";
 import { RiAdvertisementFill } from "react-icons/ri";
 import { DiJqueryLogo } from "react-icons/di";
+import useAuth from "../../Hooks/useAuth";
 
 const DashboardSidebar = () => {
-  const user = "admin";
+  const { logOut } = useAuth();
+  const navigate = useNavigate();
+
+  const user = "seller";
 
   return (
     <div className="h-screen p-3 fixed left-0 z-50 top-0 space-y-2 w-60 bg-[linear-gradient(-45deg,#00800059,#00800059)]">
@@ -228,9 +232,11 @@ const DashboardSidebar = () => {
             </a>
           </li>
           <li>
-            <a
-              rel="noopener noreferrer"
-              href="#"
+            <button
+              onClick={() => {
+                logOut();
+                navigate("/login");
+              }}
               className="flex items-center p-2 space-x-3 rounded-md"
             >
               <svg
@@ -242,7 +248,7 @@ const DashboardSidebar = () => {
                 <rect width="32" height="64" x="256" y="232"></rect>
               </svg>
               <span>Logout</span>
-            </a>
+            </button>
           </li>
         </ul>
       </div>
