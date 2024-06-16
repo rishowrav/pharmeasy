@@ -1,21 +1,34 @@
 import {
   Dialog,
   DialogPanel,
-  DialogTitle,
   Transition,
   TransitionChild,
 } from "@headlessui/react";
+import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ImSpinner9 } from "react-icons/im";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
-const AddMedicines = ({ onSubmit, isOpen, setIsOpen, isPending }) => {
+const AddMedicines = ({ onSubmit, isOpen, setIsOpen, isAnimate }) => {
   const [imageUrl, setImageUrl] = useState("");
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+
+  // get all medicine
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categoriesList"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/categories");
+      return data;
+    },
+  });
 
   return (
     <div>
@@ -23,7 +36,11 @@ const AddMedicines = ({ onSubmit, isOpen, setIsOpen, isPending }) => {
         <Dialog
           as="div"
           className="relative z-50 focus:outline-none"
-          onClose={() => setIsOpen(false)}
+          onClose={() => {
+            setIsOpen(false);
+            reset();
+            setImageUrl("");
+          }}
         >
           <div className="fixed inset-0 z-50 bg-black/30 w-screen overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
@@ -36,13 +53,6 @@ const AddMedicines = ({ onSubmit, isOpen, setIsOpen, isPending }) => {
                 leaveTo="opacity-0 transform-[scale(95%)]"
               >
                 <DialogPanel className="w-full max-w-screen-md rounded-xl bg-white p-6 backdrop-blur-2xl">
-                  <DialogTitle
-                    as="h3"
-                    className="text-base/7 font-medium text-black"
-                  >
-                    Payment successful
-                  </DialogTitle>
-
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Medicine Name */}
@@ -101,15 +111,14 @@ const AddMedicines = ({ onSubmit, isOpen, setIsOpen, isPending }) => {
                       </div>
 
                       <input
-                        required
                         type="file"
-                        {...register("image_url")}
+                        {...register("image_url", { required: true })}
                         onChange={(e) =>
                           setImageUrl(URL.createObjectURL(e.target.files[0]))
                         }
                         className="file-input file-input-bordered w-full"
                       />
-                      {!imageUrl && (
+                      {errors.image_url && (
                         <span className="text-xs text-red-600">
                           This field is required
                         </span>
@@ -149,12 +158,14 @@ const AddMedicines = ({ onSubmit, isOpen, setIsOpen, isPending }) => {
                           <option value="" disabled selected>
                             Select Category
                           </option>
-                          <option value="Tablet">Tablet</option>
-                          <option value="Capsule">Capsule</option>
-                          <option value="Injection">Injection</option>
-                          <option value="Antivirals">Antivirals</option>
-                          <option value="Syrup">Syrup</option>
-                          <option value="Analgesics">Analgesics</option>
+                          {categories.map((category) => (
+                            <option
+                              key={category._id}
+                              value={category?.category_name}
+                            >
+                              {category?.category_name}
+                            </option>
+                          ))}
                         </select>
                         {errors.category && (
                           <span className="text-xs text-red-600">
@@ -270,7 +281,6 @@ const AddMedicines = ({ onSubmit, isOpen, setIsOpen, isPending }) => {
                           type="number"
                           placeholder="Discount"
                           className="input input-bordered w-full "
-                          defaultValue={0}
                         />
                         {errors.discount && (
                           <span className="text-xs text-red-600">
@@ -281,32 +291,13 @@ const AddMedicines = ({ onSubmit, isOpen, setIsOpen, isPending }) => {
                     </div>
                     {/* if there is a button in form, it will close the modal */}
                     <button
-                      className="btn w-full btn-success mt-4"
-                      onClick={async () => {
-                        if (
-                          errors?.medicineName ||
-                          errors?.genericName ||
-                          errors?.image_url ||
-                          errors?.description ||
-                          errors?.item_mass_unit ||
-                          errors?.price ||
-                          errors?.discount ||
-                          errors?.category ||
-                          errors?.company ||
-                          errors?.available_status ||
-                          !imageUrl
-                        ) {
-                          setIsOpen(true);
-                        } else {
-                          setIsOpen(false);
-                          setImageUrl("");
-                        }
-                      }}
+                      disabled={isAnimate}
+                      className="btn w-full btn-success disabled:cursor-not-allowed disabled:bg-gray-400  mt-4"
                     >
-                      {!isPending ? (
-                        "Add Medicines"
+                      {!isAnimate ? (
+                        "Add Advertise"
                       ) : (
-                        <span className="animate-spin">|</span>
+                        <ImSpinner9 className="text-2xl animate-spin text-white" />
                       )}
                     </button>
                   </form>
@@ -324,9 +315,11 @@ AddMedicines.propTypes = {
   isOpen: PropTypes.bool,
   isPending: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isAnimate: PropTypes.bool,
   setIsOpen: PropTypes.func,
   onSubmit: PropTypes.func,
   setInsertedId: PropTypes.func,
+  handleReset: PropTypes.func,
   insertedId: PropTypes.string,
 };
 

@@ -1,13 +1,36 @@
-import avatar from "../../../../../public/images/slide2.png";
+import { useState } from "react";
+
+import AddCategoryModal from "../../../../components/Modal/AddCategoryModal";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const ManageCategory = () => {
-  const handleCategory = (e) => {
-    const form = e.target;
-    const cName = form.cName.value;
-    const iURL = form.iURL.value;
+  const [isOpen, setIsOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
-    console.table({ cName, iURL });
-  };
+  // get all category data
+  const { data: categories = [], refetch } = useQuery({
+    queryKey: ["categoriesList"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/categories");
+      return data;
+    },
+  });
+
+  // delete category data
+  const { mutateAsync } = useMutation({
+    mutationFn: async (id) => {
+      const { data } = await axiosSecure.delete(`/category/${id}`);
+      return data;
+    },
+    onSuccess: (data) => {
+      if (data.deletedCount) {
+        toast.success("Deleted Category");
+        refetch();
+      }
+    },
+  });
 
   return (
     <div>
@@ -23,91 +46,16 @@ const ManageCategory = () => {
       <div className="flex justify-end mr-10">
         <button
           className="btn bg-green-700 rounded-full px-6 text-white "
-          onClick={() => document.getElementById("add_category").showModal()}
+          onClick={() => setIsOpen(true)}
         >
           Add Category
         </button>
 
-        <dialog
-          id="add_category"
-          className="modal modal-bottom sm:modal-middle"
-        >
-          <div className="modal-box">
-            <div className="">
-              <form method="dialog" onSubmit={handleCategory}>
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Category Name</span>
-                  </div>
-                  <input
-                    name="cName"
-                    type="text"
-                    placeholder="Category Name"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Image URL</span>
-                  </div>
-                  <input
-                    name="iURL"
-                    type="text"
-                    placeholder="Image URL"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-
-                {/* if there is a button in form, it will close the modal */}
-                <button className="btn w-full btn-success  mt-4">
-                  Add Category
-                </button>
-              </form>
-            </div>
-          </div>
-        </dialog>
-      </div>
-
-      {/* Update Categor Modal */}
-      <div className="flex justify-end mr-10">
-        <dialog
-          id="update_category"
-          className="modal modal-bottom sm:modal-middle"
-        >
-          <div className="modal-box">
-            <div className="">
-              <form method="dialog" onSubmit={handleCategory}>
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Category Name</span>
-                  </div>
-                  <input
-                    name="cName"
-                    type="text"
-                    placeholder="Category Name"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-                <label className="form-control w-full ">
-                  <div className="label">
-                    <span className="label-text">Image URL</span>
-                  </div>
-                  <input
-                    name="iURL"
-                    type="text"
-                    placeholder="Image URL"
-                    className="input input-bordered w-full "
-                  />
-                </label>
-
-                {/* if there is a button in form, it will close the modal */}
-                <button className="btn w-full btn-success  mt-4">
-                  Update Category
-                </button>
-              </form>
-            </div>
-          </div>
-        </dialog>
+        <AddCategoryModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          refetch={refetch}
+        />
       </div>
 
       <table className="table">
@@ -122,36 +70,33 @@ const ManageCategory = () => {
         </thead>
         <tbody>
           {/* row 1 */}
-          <tr>
-            <td>1</td>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-32 h-32">
-                    <img src={avatar} alt="Avatar Tailwind CSS Component" />
+          {categories.map((category, ind) => (
+            <tr key={category._id}>
+              <td>{ind + 1}</td>
+              <td>
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="mask mask-squircle w-32 h-32">
+                      <img
+                        src={category?.image_url}
+                        alt="Avatar Tailwind CSS Component"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </td>
-            <td>Lorem ipsum dolor sit amet.</td>
-            <td className="space-x-2">
-              <button
-                onClick={() =>
-                  document.getElementById("update_category").showModal()
-                }
-                type="submit"
-                className="btn btn-sm bg-green-700 text-white"
-              >
-                Update
-              </button>
-              <button
-                type="submit"
-                className="btn btn-sm bg-red-600 text-white"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
+              </td>
+              <td>{category?.category_name}</td>
+              <td className="space-x-2">
+                <button
+                  onClick={() => mutateAsync(category?._id)}
+                  type="submit"
+                  className="btn btn-sm bg-red-600 text-white"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

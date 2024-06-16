@@ -9,6 +9,7 @@ import NotAvaliable from "../../../../components/NotAvailable/NotAvaliable";
 
 const ManageMedicines = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAnimate, setIsAnimate] = useState(false);
   const [insertedId, setInsertedId] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
@@ -24,6 +25,8 @@ const ManageMedicines = () => {
         toast.success("added medicine");
         console.log(data);
         setInsertedId(false);
+        setIsAnimate(false);
+        setIsOpen(false);
         refetch();
       }
     },
@@ -44,6 +47,7 @@ const ManageMedicines = () => {
 
   // react form hook
   const onSubmit = async (data) => {
+    setIsAnimate(true);
     // upload image in imgBB
     const formData = new FormData();
     formData.append("image", data.image_url[0]);
@@ -78,9 +82,8 @@ const ManageMedicines = () => {
   // handle delete
   const handleDelete = (id) => {
     getId(id);
+    refetch();
   };
-
-  console.log("insertedId= ", insertedId);
 
   // isLoaidng
   if (isLoading) {
@@ -118,6 +121,7 @@ const ManageMedicines = () => {
         insertedId={insertedId}
         setInsertedId={setInsertedId}
         isLoading={isLoading}
+        isAnimate={isAnimate}
       />
       {medicines.length ? (
         <table className="table">

@@ -1,4 +1,38 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { useState } from "react";
+
 const ManageBannerAdvertise = () => {
+  const axiosSecure = useAxiosSecure();
+  const [toggle, setToggle] = useState(false);
+
+  // get all advertise data from db
+  const { data: advertise = [], refetch } = useQuery({
+    queryKey: ["advertiseAdmin"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/advertise");
+      return data;
+    },
+  });
+
+  // update status
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async (status) => {
+      const { data } = await axiosSecure.put("advertise_status_update", status);
+      return data;
+    },
+
+    onSuccess: (data) => {
+      if (data.modifiedCount) {
+        console.log(data);
+        toast.success("Status Updated");
+        refetch();
+      }
+    },
+  });
+
   return (
     <div>
       <div>
@@ -23,65 +57,50 @@ const ManageBannerAdvertise = () => {
         </thead>
         <tbody>
           {/* row 1 */}
-          <tr>
-            <td>1</td>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-32 h-32">
-                    <img
-                      src="../../../../../public/images/slide3.png"
-                      alt="Avatar Tailwind CSS Component"
-                    />
+          {advertise.map((data, i) => (
+            <tr key={data._id}>
+              <td>{i + 1}</td>
+              <td>
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="mask mask-squircle w-32 h-32">
+                      <img
+                        src={data?.image_url}
+                        alt="Avatar Tailwind CSS Component"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </td>
-            <td>Lorem ipsum dolor sit amet.</td>
-            <td className="space-x-2">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Reiciendis odio repellendus culpa illo quidem a facilis corporis
-                iusto fugit hic...
-              </p>
-            </td>
-            <td>example@gmail.com</td>
-            <td>
-              <button className="btn btn-sm bg-green-700 text-white">
-                Approve
-              </button>
-            </td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <td>1</td>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-32 h-32">
-                    <img
-                      src="../../../../../public/images/slide4.png"
-                      alt="Avatar Tailwind CSS Component"
-                    />
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>Lorem ipsum dolor sit amet.</td>
-            <td className="space-x-2">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Reiciendis odio repellendus culpa illo quidem a facilis corporis
-                iusto fugit hic...
-              </p>
-            </td>
-            <td>example@gmail.com</td>
-            <td>
-              <button className="btn btn-sm bg-yellow-700 text-white">
-                Pending
-              </button>
-            </td>
-          </tr>
+              </td>
+              <td>{data?.medicine_name}</td>
+              <td className="space-x-2">
+                <p>{data.descriptionText.slice(0, 50)}...</p>
+              </td>
+              <td>{data?.author?.email}</td>
+              <td>
+                <button
+                  onClick={() => {
+                    setToggle(!toggle);
+                    mutateAsync({
+                      status: `${
+                        toggle ? "Add to Slide" : "Remove from Slide"
+                      }`,
+                      id: data?._id,
+                    });
+                  }}
+                  className={`btn btn-sm ${
+                    data?.status === "Add to Slide"
+                      ? "bg-red-700 hover:bg-red-700"
+                      : "bg-green-700 hover:bg-green-700"
+                  }  text-white `}
+                >
+                  {data?.status === "Remove from Slide"
+                    ? "Add to Slide"
+                    : "Remove from Slide"}
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

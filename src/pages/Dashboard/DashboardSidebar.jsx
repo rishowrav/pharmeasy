@@ -3,36 +3,37 @@ import { PiMoneyWavyThin, PiUsersLight } from "react-icons/pi";
 import { MdOutlineCategory } from "react-icons/md";
 import { TbReportMoney } from "react-icons/tb";
 import { HiMiniArrowLeftEndOnRectangle } from "react-icons/hi2";
-import avatar from "../../../public/images/avatar.png";
 import { RiAdvertisementFill } from "react-icons/ri";
 import { DiJqueryLogo } from "react-icons/di";
 import useAuth from "../../Hooks/useAuth";
+import useRole from "../../Hooks/useRole";
 
 const DashboardSidebar = () => {
-  const { logOut } = useAuth();
+  const { logOut, user: currentUser } = useAuth();
   const navigate = useNavigate();
+  const [role] = useRole();
 
-  const user = "seller";
+  const user = role;
 
   return (
     <div className="h-screen p-3 fixed left-0 z-50 top-0 space-y-2 w-60 bg-[linear-gradient(-45deg,#00800059,#00800059)]">
       <div className="flex items-center p-2 space-x-4">
         <img
-          src={avatar}
+          src={currentUser.photoURL}
           alt=""
           className="w-12 h-12 rounded-full bg-base-500"
         />
         <div>
-          <h2 className="text-lg font-semibold">Leroy Jenkins</h2>
+          <h2 className="text-lg font-semibold">{currentUser?.displayName}</h2>
           <span className="flex items-center space-x-1">
             <a
               rel="noopener noreferrer"
               href="#"
               className="text-xs hover:underline dark:text-gray-600"
             >
-              {user === "admin"
+              {user === "Admin"
                 ? "Admin"
-                : user === "seller"
+                : user === "Seller"
                 ? "Seller"
                 : "User"}
             </a>
@@ -41,7 +42,7 @@ const DashboardSidebar = () => {
       </div>
       <div className="divide-y dark:divide-gray-300">
         {/* Admin Menu */}
-        {user === "admin" && (
+        {user === "Admin" && (
           <ul className="pt-2 pb-4 space-y-1 text-sm">
             {/* <li className="dark:bg-gray-100 dark:text-gray-900">
               <NavLink
@@ -132,7 +133,7 @@ const DashboardSidebar = () => {
         )}
 
         {/* Seller Menu */}
-        {user === "seller" && (
+        {user === "Seller" && (
           <ul className="pt-2 pb-4 space-y-1 text-sm">
             <li className="rounded-sm">
               <NavLink
@@ -187,7 +188,7 @@ const DashboardSidebar = () => {
         )}
 
         {/* User Menu */}
-        {user === "user" && (
+        {user === "User" && (
           <ul className="pt-2 pb-4 space-y-1 text-sm">
             <li>
               <NavLink
@@ -252,7 +253,7 @@ const DashboardSidebar = () => {
           </li>
         </ul>
       </div>
-      <div className="flex  items-end p-2 space-x-3 text-sm h-[calc(100vh-460px)]">
+      <div className="flex  items-end p-2 space-x-3 text-sm ">
         <span className=" flex items-center gap-1">
           <HiMiniArrowLeftEndOnRectangle className="text-xl" />
           <Link to="/">Back to Home</Link>

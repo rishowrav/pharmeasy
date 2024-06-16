@@ -21,6 +21,8 @@ import UserPaymentHistory from "../pages/Dashboard/User/UserPaymentHistory/UserP
 import MyQuery from "../pages/Dashboard/User/MyQuery/MyQuery";
 import DashboardMian from "../pages/Dashboard/DashboardMian";
 import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
+import SellerRoute from "./SellerRoute";
 
 const router = createBrowserRouter([
   {
@@ -73,45 +75,85 @@ const router = createBrowserRouter([
       // admin path
       {
         path: "adminHome",
-        element: <AdminHome></AdminHome>,
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
       {
         path: "manageUsers",
-        element: <ManageUsers></ManageUsers>,
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
       },
       {
         path: "manageCategory",
-        element: <ManageCategory></ManageCategory>,
+        element: (
+          <AdminRoute>
+            <ManageCategory></ManageCategory>
+          </AdminRoute>
+        ),
       },
       {
         path: "paymentManagement",
-        element: <PaymentManagement></PaymentManagement>,
+        element: (
+          <AdminRoute>
+            <PaymentManagement></PaymentManagement>
+          </AdminRoute>
+        ),
       },
       {
         path: "salesReport",
-        element: <SalesReport></SalesReport>,
+        element: (
+          <AdminRoute>
+            <SalesReport></SalesReport>
+          </AdminRoute>
+        ),
       },
       {
         path: "manageBannerAdvertise",
-        element: <ManageBannerAdvertise></ManageBannerAdvertise>,
+        element: (
+          <AdminRoute>
+            <ManageBannerAdvertise></ManageBannerAdvertise>
+          </AdminRoute>
+        ),
       },
 
       // seller path
       {
         path: "sellerHome",
-        element: <SellerHome></SellerHome>,
+        element: (
+          <SellerRoute>
+            <SellerHome></SellerHome>
+          </SellerRoute>
+        ),
       },
       {
         path: "manageMedicines",
-        element: <ManageMedicines></ManageMedicines>,
+        element: (
+          <SellerRoute>
+            <ManageMedicines></ManageMedicines>
+          </SellerRoute>
+        ),
       },
       {
         path: "paymentHistory",
-        element: <PaymentHistory></PaymentHistory>,
+        element: (
+          <SellerRoute>
+            <PaymentHistory></PaymentHistory>
+          </SellerRoute>
+        ),
       },
       {
         path: "advertisement",
-        element: <Advertisement></Advertisement>,
+        element: (
+          <SellerRoute>
+            <Advertisement></Advertisement>
+          </SellerRoute>
+        ),
       },
 
       // User Path

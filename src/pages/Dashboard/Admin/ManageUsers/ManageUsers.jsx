@@ -1,18 +1,38 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-  const { data: users = [] } = useQuery({
+  // get all user data
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/users");
+      const { data } = await axiosSecure.get("/users");
       return data;
     },
   });
 
-  console.log(users);
+  // update user role
+  const { mutateAsync } = useMutation({
+    mutationFn: async (userRole) => {
+      const { data } = await axiosSecure.put("/userRoleUpdate", userRole);
+      return data;
+    },
+    onSuccess: (data) => {
+      if (data.modifiedCount) {
+        toast.success("updated");
+        refetch();
+      }
+    },
+  });
+
+  const handleRoleUpdate = (e, id) => {
+    e.preventDefault();
+    const role = e.target.role.value;
+    mutateAsync({ role, id });
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -33,34 +53,41 @@ const ManageUsers = () => {
         <tbody>
           {/* row 1 */}
           {users.map((user, index) => (
-            <tr key={user._id}>
+            <tr key={user?._id}>
               <td>{index + 1}</td>
               <td>
                 <div className="flex items-center gap-3">
                   <div className="avatar">
                     <div className="mask mask-squircle w-12 h-12">
                       <img
-                        src={user.photoURL}
+                        src={user?.photoURL}
                         alt="Avatar Tailwind CSS Component"
                       />
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold">{user.displayName}</div>
-                    <div className="text-sm opacity-50">{user.role}</div>
+                    <div className="font-bold">{user?.displayName}</div>
+                    <div className="text-sm opacity-50">{user?.role}</div>
                   </div>
                 </div>
               </td>
-              <td>{user.email}</td>
+              <td>{user?.email}</td>
               <td>
-                <form action="" className="flex items-center gap-2">
-                  <select className="select select-sm w-40 select-bordered w-full ">
-                    <option disabled selected>
+                <form
+                  onSubmit={(e) => handleRoleUpdate(e, user?._id)}
+                  className="flex items-center gap-2"
+                >
+                  <select
+                    name="role"
+                    defaultValue={user?.role}
+                    className="select select-sm w-40 select-bordered"
+                  >
+                    <option value="" disabled selected>
                       Select Role
                     </option>
-                    <option>Admin</option>
-                    <option>Seller</option>
-                    <option>User</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Seller">Seller</option>
+                    <option value="User">User</option>
                   </select>
                   <button
                     type="submit"
