@@ -47,10 +47,7 @@ const CatagoryDetails = () => {
 
   const handleAddToCart = (data) => {
     const cartData = {
-      medicine_name: data.medicineName,
-      image: data.image_url,
-      category: data.category,
-      price: data.price,
+      ...data,
       cart_user: {
         email: user?.email,
         name: user?.displayName,

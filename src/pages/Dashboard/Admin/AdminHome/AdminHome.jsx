@@ -1,6 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
 const AdminHome = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const { data: totalSales = {} } = useQuery({
+    queryKey: ["totalSales"],
+    queryFn: async () => {
+      const { data } = await axiosSecure("/paymentForAdmin");
+      return data;
+    },
+  });
+
+  console.log(totalSales);
+
   return (
     <div>
       <h2 className="text-4xl text-center mt-6  font-bold"> Admin Home</h2>
@@ -12,7 +26,9 @@ const AdminHome = () => {
               <RiMoneyDollarCircleFill className="text-6xl" />
             </div>
             <div className="flex flex-col justify-center align-middle">
-              <p className="text-5xl font-bold leading-none">$987</p>
+              <p className="text-5xl font-bold leading-none">
+                ${totalSales?.totalSales}
+              </p>
               <p className="capitalize font-semibold mt-2">
                 Total Sales Revenue
               </p>
@@ -24,7 +40,9 @@ const AdminHome = () => {
               <RiMoneyDollarCircleFill className="text-6xl" />
             </div>
             <div className="flex flex-col justify-center align-middle">
-              <p className="text-5xl font-bold leading-none">$354</p>
+              <p className="text-5xl font-bold leading-none">
+                ${totalSales?.totalSales}
+              </p>
               <p className="capitalize font-semibold mt-2">Paid Total</p>
             </div>
           </div>
@@ -34,7 +52,7 @@ const AdminHome = () => {
               <RiMoneyDollarCircleFill className="text-6xl" />
             </div>
             <div className="flex flex-col justify-center align-middle">
-              <p className="text-5xl font-bold leading-none">$90</p>
+              <p className="text-5xl font-bold leading-none">$00</p>
               <p className="capitalize font-semibold mt-2">Pending Total</p>
             </div>
           </div>

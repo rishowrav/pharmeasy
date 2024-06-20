@@ -1,4 +1,21 @@
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../../Hooks/useAuth";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+
 const UserPaymentHistory = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const { data: paymentHistorys = [] } = useQuery({
+    queryKey: ["UserPaymentHistory"],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/payment/${user?.email}`);
+      return data;
+    },
+  });
+
+  console.log(paymentHistorys);
+
   return (
     <div>
       <div>
@@ -15,7 +32,6 @@ const UserPaymentHistory = () => {
           <thead>
             <tr>
               <th></th>
-              <th>Email</th>
               <th>Transaction Id</th>
               <th>Total Price</th>
               <th>Status</th>
@@ -23,25 +39,16 @@ const UserPaymentHistory = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Example@gmail.com</td>
-              <td>sdfasdfasdf</td>
-              <td>$78</td>
-              <td>
-                <button className="btn btn-sm btn-success">Paid</button>
-              </td>
-            </tr>
-            {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Example@gmail.com</td>
-              <td>asfasdfasdf</td>
-              <td>$45</td>
-              <td>
-                <button className="btn btn-sm btn-warning">Pending</button>
-              </td>
-            </tr>
+            {paymentHistorys.map((ph, ind) => (
+              <tr>
+                <th>{ind + 1}</th>
+                <td>{ph?.transactionId}</td>
+                <td>${ph?.price}</td>
+                <td>
+                  <button className="btn btn-sm btn-success">Paid</button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

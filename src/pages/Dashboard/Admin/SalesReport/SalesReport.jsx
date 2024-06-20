@@ -1,4 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+
 const SalesReport = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const { data: salseReport = [{}] } = useQuery({
+    queryKey: ["salesReport"],
+    queryFn: async () => {
+      const { data } = await axiosSecure("/salseReport");
+      return data;
+    },
+  });
+
   return (
     <div>
       <div>
@@ -19,13 +32,15 @@ const SalesReport = () => {
         </thead>
         <tbody>
           {/* row 1 */}
-          <tr>
-            <td>1</td>
-            <td>Lorem ipsum dolor sit amet.</td>
-            <td>example@gmail.com</td>
-            <td>example@gmail.com</td>
-            <th>$89</th>
-          </tr>
+          {salseReport.map((sr, ind) => (
+            <tr>
+              <td>{ind + 1}</td>
+              <td>Lorem ipsum dolor sit amet.</td>
+              <td>example@gmail.com</td>
+              <td>{sr?.buyerInfo?.email}</td>
+              <th>${sr?.price}</th>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

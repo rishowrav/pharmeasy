@@ -4,11 +4,15 @@ import useAuth from "../../Hooks/useAuth";
 import CartSingleRow from "./CartSingleRow";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useState } from "react";
+import CheckoutModal from "../../components/Modal/CheckoutModal";
 
 const Cart = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [isOpen, setIsOpen] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
 
   // get all carts data
   const {
@@ -22,6 +26,8 @@ const Cart = () => {
       return data;
     },
   });
+
+  console.log(carts);
 
   // delete cart data
   const { mutateAsync } = useMutation({
@@ -41,6 +47,15 @@ const Cart = () => {
   const totalPrice = carts.reduce((acc, curr) => {
     return acc + parseInt(curr.price);
   }, 0);
+
+  const handleCheckout = async () => {
+    const { data } = await axiosSecure.post("/create-payment-intent", {
+      price: totalPrice,
+    });
+
+    console.log("client Secrect: ", data.clientSecret);
+    setClientSecret(data.clientSecret);
+  };
 
   if (isLoading) {
     return <h2 className="text-3xl font-bold text-center">Loading...</h2>;
@@ -70,7 +85,12 @@ const Cart = () => {
           ))}
         </tbody>
       </table>
-
+      <CheckoutModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        totalPrice={totalPrice}
+        clientSecret={clientSecret}
+      />
       <div className="flex flex-col  p-6 space-y-4 sm:p-10 ">
         <div className="space-y-1 text-right">
           <p>
@@ -86,6 +106,10 @@ const Cart = () => {
             Clear All
           </button>
           <button
+            onClick={() => {
+              setIsOpen(true);
+              handleCheckout();
+            }}
             type="button"
             className="px-6 py-2 border rounded-full bg-green-700 text-white"
           >
