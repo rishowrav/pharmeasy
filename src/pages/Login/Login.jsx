@@ -4,11 +4,13 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useState } from "react";
 
 const Login = () => {
   const { loginUser, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
+  const [loginLoading, setLoginLoading] = useState(false);
 
   const {
     register,
@@ -18,13 +20,14 @@ const Login = () => {
 
   //login with email password
   const onSubmit = async (data) => {
-    console.log(data);
+    setLoginLoading(true);
 
     try {
       const result = await loginUser(data.email, data.password);
 
       console.log("setp-1: complete login user", result);
-      toast.success("Successfully registered your account");
+      toast.success("Successfully Login");
+      setLoginLoading(false);
       navigate("/");
     } catch (er) {
       console.log(er);
@@ -34,6 +37,7 @@ const Login = () => {
 
   //login with google
   const handleGoogleLogin = async () => {
+    setLoginLoading(true);
     try {
       const result = await loginWithGoogle();
 
@@ -51,8 +55,11 @@ const Login = () => {
       console.log(result);
       toast.success("Successfully login with google");
       navigate("/");
+      setLoginLoading(false);
     } catch (er) {
       console.log(er);
+      setLoginLoading(false);
+      toast.error(err.message);
     }
   };
 
@@ -146,8 +153,11 @@ const Login = () => {
                 </a>
               </div>
               <div className="mt-4 md:flex md:items-center ">
-                <button className="btn w-full bg-green-700 text-white">
-                  Login
+                <button
+                  disabled={loginLoading}
+                  className="disabled:bg-gray-300 disabled:text-black btn w-full bg-green-700 text-white"
+                >
+                  {loginLoading ? "loading..." : "Login"}
                 </button>
               </div>
               <div onClick={handleGoogleLogin} className="mt-6 text-center ">

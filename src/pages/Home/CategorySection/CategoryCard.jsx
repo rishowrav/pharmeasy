@@ -8,9 +8,6 @@ const CategoryCard = ({ category }) => {
     <Link to={`/catagoryDetails/${category_name}`}>
       <div className="card bg-base-100 border border-green-600">
         <figure className="relative h-52">
-          <span className="font-bold text-xl absolute top-0 right-0 rounded-bl-md bg-green-600 px-5 py-3 text-white">
-            22
-          </span>
           <img
             src={image_url}
             alt="Shoes"

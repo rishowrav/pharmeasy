@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import avatar from "../../../../public/images/avatar.png";
 
-const QueryCard = () => {
+const QueryCard = ({ query }) => {
   return (
     <Link>
       <div className="flex flex-col  mx-4 my-6 shadow-lg">
         <div className="px-4 py-12 rounded-t-lg sm:px-8 md:px-12">
           <p className="relative px-6 py-1 text-lg italic text-center ">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
+              xmlns={"http://www.w3.org/2000/svg"}
               viewBox="0 0 512 512"
               fill="currentColor"
               className="w-8 h-8 dark:text-green-600"
@@ -16,9 +16,7 @@ const QueryCard = () => {
               <path d="M232,246.857V16H16V416H54.4ZM48,48H200V233.143L48,377.905Z"></path>
               <path d="M280,416h38.4L496,246.857V16H280ZM312,48H464V233.143L312,377.905Z"></path>
             </svg>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Voluptatibus quibusdam, eligendi exercitationem molestias possimus
-            facere.
+            {query?.ReviewDescription}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -32,14 +30,14 @@ const QueryCard = () => {
         </div>
         <div className="flex flex-col items-center justify-center p-8 rounded-b-lg bg-[#009432] dark:text-gray-50">
           <img
-            src={avatar}
+            src={query?.author_image}
             alt=""
             className="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full "
           />
           <p className="text-xl font-semibold leading-tight">
-            Distinctio Animi
+            {query?.author_name}
           </p>
-          <p className="text-sm uppercase">User</p>
+          <p className="text-sm uppercase">{query?.author_role}</p>
         </div>
       </div>
     </Link>

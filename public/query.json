@@ -1,0 +1,33 @@
+[
+      {
+        "ReviewDescription": "This is the best online pharmacy I've ever used. The interface is user-friendly, and the delivery is super fast.",
+        "author_image": "https://i.ibb.co/sjgnyBv/pexels-simon-robben-55958-614810.jpg",
+        "author_name": "Jane Doe",
+        "author_role": "User"
+      },
+      {
+        "ReviewDescription": "I appreciate the detailed product information and easy navigation. Customer service was very helpful.",
+        "author_image": "https://i.ibb.co/3Ctqd10/143101131.png",
+        "author_name": "John Smith",
+        "author_role": "Seller"
+      },
+      {
+        "ReviewDescription": "Great experience overall. The subscription service for my monthly vitamins is very convenient.",
+        "author_image": "https://i.ibb.co/BHhD8c5/Screenshot-1.png",
+        "author_name": "Emily Jones",
+        "author_role": "User"
+      },
+      {
+        "ReviewDescription": "The mobile app is fantastic. I can order my medications easily and track them in real-time.",
+        "author_image": "https://i.ibb.co/J7Y2mP3/Whats-App-Image-2023-11-07-at-1-24-22-PM-Photo-Room-png-Photo-Room.png",
+        "author_name": "Michael Brown",
+        "author_role": "Seller"
+      },
+      {
+        "ReviewDescription": "Excellent service and quick response from customer support. Highly recommend this e-commerce site.",
+        "author_image": "https://i.ibb.co/sVMzFvf/Whats-App-Image-2023-11-15-at-5-09-21-PM.jpg",
+        "author_name": "Lisa White",
+        "author_role": "User"
+      }
+    ]
+    

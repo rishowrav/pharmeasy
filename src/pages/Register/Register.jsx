@@ -8,10 +8,12 @@ import toast from "react-hot-toast";
 import { upload_image_url } from "../../api/utils";
 import { useMutation } from "@tanstack/react-query";
 import { axiosPublic } from "../../Hooks/useAxiosPublic";
+import { useState } from "react";
 
 const Register = () => {
   const { createUser } = useAuth();
   const navigate = useNavigate();
+  const [registerLoading, setRegisterLoading] = useState(false);
 
   // user data save to server side
   const { mutateAsync } = useMutation({
@@ -26,6 +28,7 @@ const Register = () => {
       if (data.insertedId) {
         console.log("user Data Saved Successfully", data);
         toast.success("Successfully! user data saved");
+        setRegisterLoading(false);
       }
     },
   });
@@ -37,6 +40,7 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setRegisterLoading(true);
     console.log(data);
 
     const imgData = data.image[0];
@@ -71,8 +75,11 @@ const Register = () => {
 
       toast.success("Succcessfully registered your account");
       navigate("/");
+      setRegisterLoading(false);
     } catch (err) {
       console.log(err);
+      toast.error(err.message);
+      setRegisterLoading(false);
     }
   };
 
@@ -204,8 +211,11 @@ const Register = () => {
               )}
               <div className="mt-4">
                 <div className=" md:flex md:items-center ">
-                  <button className="btn w-full bg-green-700 text-white">
-                    Register
+                  <button
+                    disabled={registerLoading}
+                    className="btn w-full disabled:bg-gray-300 bg-green-700 hover:bg-green-700 disabled:text-black text-white"
+                  >
+                    {registerLoading ? "loading.." : "Register"}
                   </button>
                 </div>
 

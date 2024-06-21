@@ -33,7 +33,6 @@ const Navbar = () => {
       <li className="text-sm font-normal text-base-400 ">
         <NavLink to="/cart">
           <IoCartOutline className="text-xl"></IoCartOutline> Cart
-          <div className="badge bg-green-700 -ml-1 text-white">4</div>
         </NavLink>
       </li>
       <li className="text-sm font-normal text-base-400 ">
@@ -135,7 +134,7 @@ const Navbar = () => {
                   className="menu menu-sm space-y-1 dropdown-content mt-3 z-[999] p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
-                    <Link to="my_submitted_assignment">Update Profile</Link>
+                    <Link to="/updateProfile">Update Profile</Link>
                   </li>
                   <li>
                     <Link to="dashboard">Dashboard</Link>

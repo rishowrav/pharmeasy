@@ -8,8 +8,21 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const QuerySection = () => {
+  // get all medicines
+  const { data: querys = [] } = useQuery({
+    queryKey: ["query"],
+    queryFn: async () => {
+      const { data } = await axios.get("query.json");
+      return data;
+    },
+  });
+
+  console.log(querys);
+
   return (
     <div className=" space-y-10">
       <h2 className="text-5xl  font-bold ">Query Section</h2>
@@ -46,33 +59,11 @@ const QuerySection = () => {
           modules={[Pagination, Autoplay, Navigation]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <QueryCard />
-          </SwiperSlide>
+          {querys.map((query) => (
+            <SwiperSlide>
+              <QueryCard query={query} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

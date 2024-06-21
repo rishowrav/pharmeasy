@@ -8,8 +8,21 @@ import "swiper/css/pagination";
 // import required modules
 import { Autoplay, Pagination } from "swiper/modules";
 import DiscountCard from "./DiscountCard";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 const DiscountProducts = () => {
+  const axiosPublic = useAxiosPublic();
+
+  // get all medicines
+  const { data: medicines = [] } = useQuery({
+    queryKey: ["shopData"],
+    queryFn: async () => {
+      const { data } = await axiosPublic.get("/medicines");
+      return data;
+    },
+  });
+
   return (
     <div className="">
       <h2 className="text-5xl font-bold mb-10">Discount Product</h2>
@@ -47,30 +60,11 @@ const DiscountProducts = () => {
         modules={[Pagination, Autoplay]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <DiscountCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DiscountCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DiscountCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DiscountCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DiscountCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DiscountCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DiscountCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DiscountCard />
-        </SwiperSlide>
+        {medicines.map((medicine) => (
+          <SwiperSlide>
+            <DiscountCard medicine={medicine} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
