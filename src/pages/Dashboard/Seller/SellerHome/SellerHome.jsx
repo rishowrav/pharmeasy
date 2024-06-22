@@ -12,7 +12,7 @@ const SellerHome = () => {
               <RiMoneyDollarCircleFill className="text-6xl" />
             </div>
             <div className="flex flex-col justify-center align-middle">
-              <p className="text-5xl font-bold leading-none">$987</p>
+              <p className="text-5xl font-bold leading-none">$00</p>
               <p className="capitalize font-semibold mt-2">
                 Total Sales Revenue
               </p>
@@ -24,7 +24,7 @@ const SellerHome = () => {
               <RiMoneyDollarCircleFill className="text-6xl" />
             </div>
             <div className="flex flex-col justify-center align-middle">
-              <p className="text-5xl font-bold leading-none">$354</p>
+              <p className="text-5xl font-bold leading-none">$00</p>
               <p className="capitalize font-semibold mt-2">Paid Total</p>
             </div>
           </div>
@@ -34,7 +34,7 @@ const SellerHome = () => {
               <RiMoneyDollarCircleFill className="text-6xl" />
             </div>
             <div className="flex flex-col justify-center align-middle">
-              <p className="text-5xl font-bold leading-none">$90</p>
+              <p className="text-5xl font-bold leading-none">$00</p>
               <p className="capitalize font-semibold mt-2">Pending Total</p>
             </div>
           </div>

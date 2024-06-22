@@ -4,6 +4,7 @@ import AddCategoryModal from "../../../../components/Modal/AddCategoryModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const ManageCategory = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +35,10 @@ const ManageCategory = () => {
 
   return (
     <div>
+      {" "}
+      <Helmet>
+        <title>PharmEasy | Manage Category</title>
+      </Helmet>
       <div>
         <h2 className="text-4xl text-center mt-6  font-bold">
           {" "}
@@ -41,7 +46,6 @@ const ManageCategory = () => {
         </h2>
         <hr className="w-96 mx-auto mt-2 mb-4" />
       </div>
-
       {/* Add Categor Modal */}
       <div className="flex justify-end mr-10">
         <button
@@ -57,7 +61,6 @@ const ManageCategory = () => {
           refetch={refetch}
         />
       </div>
-
       <table className="table">
         {/* head */}
         <thead>

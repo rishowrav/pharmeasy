@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useState } from "react";
 import CheckoutModal from "../../components/Modal/CheckoutModal";
+import { Helmet } from "react-helmet-async";
 
 const Cart = () => {
   const axiosPublic = useAxiosPublic();
@@ -63,6 +64,9 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>PharmEasy | Cart</title>
+      </Helmet>
       <table className="table">
         {/* head */}
         <thead>

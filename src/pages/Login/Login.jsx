@@ -5,6 +5,7 @@ import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { loginUser, loginWithGoogle } = useAuth();
@@ -65,6 +66,9 @@ const Login = () => {
 
   return (
     <section className=" ">
+      <Helmet>
+        <title>PharmEasy | Login</title>
+      </Helmet>
       <div className="container px-6 py-24 mx-auto lg:py-32">
         <div className="lg:flex items-center">
           <div className="lg:w-1/2">

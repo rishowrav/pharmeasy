@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { upload_image_url } from "../../../../api/utils";
 import useAuth from "../../../../Hooks/useAuth";
 import NotAvaliable from "../../../../components/NotAvailable/NotAvaliable";
+import { Helmet } from "react-helmet-async";
 
 const ManageMedicines = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -92,6 +93,10 @@ const ManageMedicines = () => {
 
   return (
     <div>
+      {" "}
+      <Helmet>
+        <title>PharmEasy | Manage Medicines</title>
+      </Helmet>
       <div>
         <h2 className="text-4xl text-center mt-6  font-bold">
           {" "}
@@ -99,7 +104,6 @@ const ManageMedicines = () => {
         </h2>
         <hr className="w-96 mx-auto mt-2 mb-4" />
       </div>
-
       {/* Add Medicines Modal */}
       <div className="flex justify-end mr-10 mb-6">
         <button
@@ -111,7 +115,6 @@ const ManageMedicines = () => {
           Add Medicines
         </button>
       </div>
-
       {/*Update Medicines Modal */}
       <AddMedicines
         setIsOpen={setIsOpen}

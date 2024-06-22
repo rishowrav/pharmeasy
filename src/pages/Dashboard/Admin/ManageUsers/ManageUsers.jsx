@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -36,6 +37,9 @@ const ManageUsers = () => {
 
   return (
     <div className="overflow-x-auto">
+      <Helmet>
+        <title>PharmEasy | Manage Users</title>
+      </Helmet>
       <div>
         <h2 className="text-4xl text-center mt-6  font-bold"> Manage Users</h2>
         <hr className="w-80 mx-auto mt-2 mb-4" />

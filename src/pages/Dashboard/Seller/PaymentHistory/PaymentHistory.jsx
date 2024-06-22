@@ -1,6 +1,12 @@
+import { Helmet } from "react-helmet-async";
+
 const PaymentHistory = () => {
   return (
     <div>
+      {" "}
+      <Helmet>
+        <title>PharmEasy | Payment History</title>
+      </Helmet>
       <div>
         <h2 className="text-4xl text-center mt-6  font-bold">
           {" "}

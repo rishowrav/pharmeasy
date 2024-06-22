@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import useAuth from "../../../../Hooks/useAuth";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Advertisement = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,11 +36,14 @@ const Advertisement = () => {
 
   return (
     <div>
+      {" "}
+      <Helmet>
+        <title>PharmEasy | Advertise</title>
+      </Helmet>
       <div>
         <h2 className="text-4xl text-center mt-6  font-bold"> Advertisement</h2>
         <hr className="w-96 mx-auto mt-2 mb-4" />
       </div>
-
       {/* Add Advertise Modal */}
       <div className="flex justify-end mr-10 mb-6">
         <button
@@ -55,9 +59,7 @@ const Advertisement = () => {
           refetch={refetch}
         />
       </div>
-
       {/* ---------------------------------------------------------------------------------- */}
-
       <table className="table">
         {/* head */}
         <thead>

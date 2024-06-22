@@ -6,6 +6,8 @@ import MedicinePreivewModal from "../../components/Modal/MedicinePreivewModal";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAuth from "../../Hooks/useAuth";
+import { Helmet } from "react-helmet-async";
+import { Fade } from "react-awesome-reveal";
 
 const Shop = () => {
   const axiosPublic = useAxiosPublic();
@@ -54,12 +56,16 @@ const Shop = () => {
 
   return (
     <div className="overflow-x-auto container mx-auto  border-x border-base-200 border-t mt-4">
+      <Helmet>
+        <title>PharmEasy | Shop</title>
+      </Helmet>
+
       <MedicinePreivewModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         singleMedicine={singleMedicine}
       />
-
+      <Fade duration={2000}></Fade>
       <table className="table">
         {/* head */}
         <thead>
@@ -71,7 +77,7 @@ const Shop = () => {
             <th>Action</th>
             <th>Action</th>
           </tr>
-        </thead>
+        </thead>{" "}
         <tbody>
           {/* row 1 */}
           {medicines.map((medicine, ind) => (
@@ -113,8 +119,9 @@ const Shop = () => {
               </th>
             </tr>
           ))}
-        </tbody>
+        </tbody>{" "}
       </table>
+      <Fade />
     </div>
   );
 };

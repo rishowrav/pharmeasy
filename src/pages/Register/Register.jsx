@@ -9,6 +9,7 @@ import { upload_image_url } from "../../api/utils";
 import { useMutation } from "@tanstack/react-query";
 import { axiosPublic } from "../../Hooks/useAxiosPublic";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const { createUser } = useAuth();
@@ -85,6 +86,9 @@ const Register = () => {
 
   return (
     <section className="">
+      <Helmet>
+        <title>PharmEasy | Register Now</title>
+      </Helmet>
       <div className="container px-6 py-24 mx-auto lg:py-32">
         <div className="lg:flex items-center">
           <div className="lg:w-1/2">

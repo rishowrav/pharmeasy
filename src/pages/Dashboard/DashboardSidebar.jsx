@@ -16,7 +16,7 @@ const DashboardSidebar = () => {
   const user = role;
 
   return (
-    <div className="h-screen p-3 fixed left-0 z-50 top-0 space-y-2 w-60 bg-[linear-gradient(-45deg,#00800059,#00800059)]">
+    <div className="h-screen p-3 fixed left-0 z-50 top-0 space-y-2 w-60 bg-[#A6D3A6]">
       <div className="flex items-center p-2 space-x-4">
         <img
           src={currentUser.photoURL}

@@ -87,7 +87,7 @@ const Navbar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost text-xl lg:hidden bg-[linear-gradient(45deg,#FF6F61,#9656A1B3)] text-white mr-2 hover:bg-[#E35353]"
+              className="btn btn-ghost text-xl lg:hidden bg-green-700 text-white mr-2 hover:bg-green-700"
             >
               <FaBarsStaggered />
             </div>

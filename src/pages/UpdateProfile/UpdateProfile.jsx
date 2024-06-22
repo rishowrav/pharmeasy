@@ -1,10 +1,16 @@
+import { Helmet } from "react-helmet-async";
 import useAuth from "../../Hooks/useAuth";
+import useRole from "../../Hooks/useRole";
 
 const UpdateProfile = () => {
   const { user } = useAuth();
+  const [role] = useRole();
 
   return (
     <div className="flex flex-col justify-center mt-10 container mx-auto p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-50 dark:text-gray-800">
+      <Helmet>
+        <title>PharmEasy | Update Profile</title>
+      </Helmet>
       <img
         src={user?.photoURL}
         alt=""
@@ -12,9 +18,13 @@ const UpdateProfile = () => {
       />
       <div className="space-y-4 text-center divide-y dark:divide-gray-300">
         <div className="my-2 space-y-1">
+          <p className="px-5 font-bold uppercase text-xs sm:text-base text-gray-400">
+            {role}
+          </p>
           <h2 className="text-xl font-semibold sm:text-2xl">
             {user?.displayName}
           </h2>
+
           <p className="px-5 text-xs sm:text-base dark:text-gray-600">
             {user?.email}
           </p>

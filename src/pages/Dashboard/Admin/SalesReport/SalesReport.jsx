@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const SalesReport = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,6 +15,9 @@ const SalesReport = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>PharmEasy | Sales Report</title>
+      </Helmet>
       <div>
         <h2 className="text-4xl text-center mt-6  font-bold"> Sales Report</h2>
         <hr className="w-80 mx-auto mt-2 mb-4" />
@@ -35,7 +39,7 @@ const SalesReport = () => {
           {salseReport.map((sr, ind) => (
             <tr>
               <td>{ind + 1}</td>
-              <td>Lorem ipsum dolor sit amet.</td>
+              <td>Evion Forte Strip Of 10 Capsules</td>
               <td>example@gmail.com</td>
               <td>{sr?.buyerInfo?.email}</td>
               <th>${sr?.price}</th>
