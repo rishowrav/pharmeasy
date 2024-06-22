@@ -28,8 +28,6 @@ const Cart = () => {
     },
   });
 
-  console.log(carts);
-
   // delete cart data
   const { mutateAsync } = useMutation({
     mutationFn: async (id) => {

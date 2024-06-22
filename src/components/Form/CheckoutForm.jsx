@@ -108,6 +108,8 @@ const CheckoutForm = ({ setIsOpen, clientSecret, totalPrice }) => {
 
           if (role === "User") {
             navigate("/dashboard/userPaymentHistory");
+          } else if (role === "Seller") {
+            navigate("/dashboard/paymentHistory");
           }
         }
       } catch (err) {
