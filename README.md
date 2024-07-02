@@ -7,8 +7,6 @@
 
   <h3 align="center">Website Name:- <a href="https://pharmeasy-client.web.app/">PharmEasy</a></h3>
   <p>Live link: https://pharmeasy-client.web.app/</p>
-  
-### Assignment_ID:  Assignment12_category_0022
 
 <strong align="center">Explore the docs »</strong>
 <br/>
@@ -16,6 +14,12 @@
 <br/>
 
 </div>
+
+### Live Site Link: https://pharmeasy-client.web.app/
+
+### Client Side Link: https://github.com/programming-hero-web-course1/b9a12-client-side-rishowrav
+
+### Server Side Link: https://github.com/programming-hero-web-course1/b9a12-server-side-rishowrav
 
 ### Admin login info
 
