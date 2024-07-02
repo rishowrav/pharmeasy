@@ -19,7 +19,7 @@
 
 ### Client Side Link: https://github.com/rishowrav/pharmeasy-client
 
-### Server Side Link: https://github.com/programming-hero-web-course1/b9a12-server-side-rishowrav
+### Server Side Link: https://github.com/rishowrav/pharmeasy-server
 
 ### Admin login info
 
