@@ -26,6 +26,8 @@
 - <strong>Email: </strong> rishowrav@gmail.com
 - <strong>Password: </strong> 111111
 
+<hr>
+
 ### Features of Website
 
 - <strong>Stripe: </strong> Integrating Stripe as a payment method in a React application offers numerous benefits, including ease of integration, robust security, and extensive customization. Stripe's React library, react-stripe-js, simplifies the process of incorporating payment forms, handling validations, and securely processing transactions. It supports a wide range of payment methods and currencies, making it versatile for global applications. Stripe ensures PCI compliance and employs advanced security measures like tokenization to protect sensitive payment information. Additionally, Stripe's comprehensive documentation and active community support help developers efficiently implement and troubleshoot their payment systems, enhancing the overall user experience and reliability of the application.
