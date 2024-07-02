@@ -24,7 +24,7 @@
 ### Admin login info
 
 - <strong>Email: </strong> rishowrav@gmail.com
-- <strong>Password: </strong> 111111
+- <strong>Password: </strong> ****** <!-- 111111 -->
 
 <hr>
 
